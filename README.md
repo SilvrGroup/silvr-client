@@ -1,2 +1,3 @@
-# silvr-broker-client
-A Python client to send new application for brokers
+# silvr-client
+
+A Python client for brokers to send new application.
