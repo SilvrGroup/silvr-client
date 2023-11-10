@@ -27,7 +27,7 @@ class DeclaredRevenueDuration(TextChoices):
     BETWEEN_6_AND_11_MONTHS = "BETWEEN_6_AND_11_MONTHS"
     ABOVE_12_MONTHS = "ABOVE_12_MONTHS"
 
-    
+
 class DocumentCategory(TextChoices):
     # Financial
     BANK_STATEMENT = "BANK_STATEMENT"
