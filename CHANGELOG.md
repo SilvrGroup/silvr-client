@@ -6,4 +6,3 @@ This document describes changes between each  past release.
 
 - Allow broker login
 - Allow sending applications
-

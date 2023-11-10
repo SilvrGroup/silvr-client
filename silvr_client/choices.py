@@ -1,6 +1,6 @@
 import enum
-from typing import BinaryIO
 from dataclasses import dataclass
+from typing import BinaryIO
 
 
 class TextChoices(str, enum.Enum):

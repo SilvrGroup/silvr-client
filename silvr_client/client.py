@@ -1,13 +1,12 @@
 import httpx
+
 from .authentication import AuthenticationBackend
-from .choices import (
-    DocumentCategory,
-    Country,
-    ExpectedFundingAmountRange,
-    DeclaredRevenueRange,
-    DeclaredRevenueDuration,
-    UploadedFile,
-)
+from .choices import Country
+from .choices import DeclaredRevenueDuration
+from .choices import DeclaredRevenueRange
+from .choices import DocumentCategory
+from .choices import ExpectedFundingAmountRange
+from .choices import UploadedFile
 
 
 class Client(httpx.Client):

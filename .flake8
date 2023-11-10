@@ -1,0 +1,40 @@
+[flake8]
+extend-ignore =
+    D100
+    D101
+    D102
+    D103
+    D104
+    D105
+    D106
+    D107
+    E203
+    E501
+    N801
+    N802
+    N806
+    N807
+    N818
+    N999
+max-complexity = 17
+max-line-length = 120
+per-file-ignores =
+    */__init__.py:F401
+    .github/*:INP001
+	./demo.py:INP001
+	./setup.py:INP001
+
+# flake8-docstrings
+docstring-convention = google
+
+# flake8-tidy-imports
+banned-modules =
+  distutils.* = Do not import distutils. If you wanted strtobool, use silvr.libs.conversion.str_to_bool.
+  pytz.* = Use zoneinfo instead (https://docs.djangoproject.com/en/4.0/releases/4.0/#zoneinfo-default-timezone-implementation).
+  sentry_sdk.capture_exception = Use 'logging.exception'. Sentry captures from logs (https://docs.sentry.io/platforms/python/guides/logging/)
+  six = Use Python 3 features directly
+ban-relative-imports = parents
+
+# pep8-naming
+classmethod-decorators = classmethod,classproperty
+staticmethod-decorators = staticmethod,post_generation

@@ -1,9 +1,14 @@
-"""This is a demo of how to use the client to create a new application and attach documents to it"""
-import os
-import sys
+"""This is a demo of how to use the client to create a new application
+and attach documents to it"""
 import json
+import os
 import random
-from silvr_client import SilvrClient, TokenAuth, choices, UploadedFile
+import sys
+
+from silvr_client import choices
+from silvr_client import SilvrClient
+from silvr_client import TokenAuth
+from silvr_client import UploadedFile
 
 API_URL = os.getenv("API_URL", "http://localhost:8000/api/")
 BROKER_API_KEY = os.getenv("BROKER_API_KEY", "")
@@ -12,7 +17,7 @@ COMPANY_REGISTRATION_NUMBER = os.getenv("COMPANY_REGISTRATION_NUMBER")
 
 
 if not BROKER_API_KEY:
-    print("Define a BROKER_API_KEY environement variable")
+    print("Define a BROKER_API_KEY environment variable")
     sys.exit(1)
 
 if not COMPANY_REGISTRATION_NUMBER:
@@ -22,7 +27,6 @@ if not COMPANY_REGISTRATION_NUMBER:
 with SilvrClient(base_url=API_URL, auth=TokenAuth(BROKER_API_KEY)) as client:
     print("List of applications")
     applications_response = client.applications()
-    breakpoint()
     print(json.dumps(applications_response.json(), indent=2))
     applications_response.raise_for_status()
 
