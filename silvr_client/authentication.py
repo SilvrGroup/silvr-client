@@ -1,6 +1,15 @@
-from .authentication import AuthenticationBackend
+class AuthenticationBackend:
+    @property
+    def headers(self):
+        raise NotImplementedError
 
-class Client:
-    def __init__(self, authentication: AuthenticationBakend, base_url="https://app.silvr.co"):
-        self.authentication = authentication
-        
+
+class TokenAuth(AuthenticationBackend):
+    api_key: str
+    
+    def __init__(self, api_key):
+        self.api_key = api_key
+
+    @property
+    def headers(self):
+        return {"X-API-KEY": self.api_key}
