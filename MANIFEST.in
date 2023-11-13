@@ -1,2 +1,3 @@
 include *.md README.md CHANGELOG.md
 include LICENSE
+include dev-requirements.txt
