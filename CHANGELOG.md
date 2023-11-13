@@ -2,11 +2,11 @@
 
 This document describes changes between each  past release.
 
-## 0.2.0 (unreleased)
+## 0.1.1 (2023-11-13)
 
 
-- Nothing changed yet.
-
+- Add Silvr models dataclasses to help with the integration.
+- Add API documentation in README
 
 ## 0.1.0 (2023-11-13)
 

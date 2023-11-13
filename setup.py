@@ -29,7 +29,7 @@ TESTS_REQUIRE = [
 
 setup(
     name="silvr-client",
-    version="0.2.0.dev0",
+    version="0.1.1",
     description="Silvr client",
     long_description=README + "\n\n" + CHANGELOG,
     long_description_content_type="text/markdown",
