@@ -32,6 +32,7 @@ setup(
     version="0.2.0.dev0",
     description="Silvr client",
     long_description=README + "\n\n" + CHANGELOG,
+    long_description_content_type="text/markdown",
     license="Apache License (2.0)",
     classifiers=[
         "Programming Language :: Python",
