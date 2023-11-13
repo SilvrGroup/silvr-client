@@ -20,7 +20,7 @@ class ApplicationState(TextChoices):
     CONTRACT_SIGNED = "CONTRACT_SIGNED"
     UNKNOWN = "UNKNOWN"
 
-    
+
 class ExpectedFundingAmountRange(TextChoices):
     LESS_THAN_10K = "LESS_THAN_10K"
     BETWEEN_10K_AND_100K = "BETWEEN_10K_AND_100K"
@@ -73,4 +73,3 @@ class UploadedFile:
 
     def astuple(self) -> tuple[str, BinaryIO, ContentType]:
         return (self.filename, self.stream, self.content_type)
-

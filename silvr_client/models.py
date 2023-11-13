@@ -1,22 +1,32 @@
 import datetime as dt
 from dataclasses import dataclass
 
-from .choices import ExpectedFundingAmountRange, DeclaredRevenueRange, DeclaredRevenueDuration, ApplicationState, DocumentCategory, Country
+import httpx
+
+from .client import Client
+from .choices import (
+    ExpectedFundingAmountRange,
+    DeclaredRevenueRange,
+    DeclaredRevenueDuration,
+    ApplicationState,
+    DocumentCategory,
+    Country,
+    UploadedFile,
+)
 
 
 @dataclass
 class Application:
     uuid: str
     created: dt.datetime
-    author: str
-    
+    author: str | None
     state: ApplicationState
 
     # Contact fields
-    email: str
     first_name: str
     last_name: str
-    phone_number: str    
+    email: str
+    phone_number: str
 
     # Company fields
     company_name: str
@@ -37,10 +47,51 @@ class Application:
         application.created = dt.datetime.fromisoformat(application.created)
         application.state = ApplicationState(application.state)
         application.country = Country(application.country)
-        application.expected_funding_amount_range = ExpectedFundingAmountRange(application.expected_funding_amount_range)
-        application.declared_monthly_revenue_range = DeclaredRevenueRange(application.declared_monthly_revenue_range)
-        application.declared_revenue_duration_range = DeclaredRevenueDuration(application.declared_revenue_duration_range)
+        application.expected_funding_amount_range = ExpectedFundingAmountRange(
+            application.expected_funding_amount_range
+        )
+        application.declared_monthly_revenue_range = DeclaredRevenueRange(
+            application.declared_monthly_revenue_range
+        )
+        application.declared_revenue_duration_range = DeclaredRevenueDuration(
+            application.declared_revenue_duration_range
+        )
         return application
+
+    def save(self, client: Client) -> httpx.Response:
+        response = client.new_application(
+            # Contact
+            first_name=self.first_name,
+            last_name=self.last_name,
+            email=self.email,
+            phone_number=self.phone_number,
+            # Company
+            country=self.country,
+            company_name=self.company_name,
+            company_registration_number=self.company_registration_number,
+            company_vat_number=self.company_vat_number,
+            # Application
+            expected_funding_amount_range=self.expected_funding_amount_range,
+            declared_monthly_revenue_range=self.declared_monthly_revenue_range,
+            declared_revenue_duration_range=self.declared_revenue_duration_range,
+            # Broker info
+            additional_message=self.additional_message,
+        )
+        body = response.json()
+        if "uuid" in body:
+            updated_application = Application.from_request(body)
+            self.__dict__ = updated_application.__dict__
+
+        return response
+
+    def upload_document(
+        self, client: Client, file: UploadedFile, category=DocumentCategory
+    ) -> "Document":
+        if not self.uuid:
+            raise ValueError("Please save your application first")
+
+        return client.new_document(self.uuid, file, category)
+
 
 @dataclass
 class Document:
@@ -48,11 +99,10 @@ class Document:
     created: dt.datetime
     filename: str
     category: DocumentCategory
-    
+
     @classmethod
     def from_request(cls, document_body: dict[str, str | None]) -> "Document":
         document = Document(**document_body)
         document.created = dt.datetime.fromisoformat(document.created)
         document.category = DocumentCategory(document.category)
         return document
-

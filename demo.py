@@ -33,7 +33,11 @@ with SilvrClient(base_url=API_URL, auth=TokenAuth(BROKER_API_KEY)) as client:
     applications_response.raise_for_status()
     applications = [Application.from_request(a) for a in body]
 
-    existing_application = [a for a in applications if a.email == CLIENT_EMAIL and a.company_registration_number == COMPANY_REGISTRATION_NUMBER]
+    existing_application = [
+        a
+        for a in applications
+        if a.email == CLIENT_EMAIL and a.company_registration_number == COMPANY_REGISTRATION_NUMBER
+    ]
     application_uuid = None
     if existing_application:
         application_uuid = existing_application[0].uuid
@@ -59,7 +63,6 @@ with SilvrClient(base_url=API_URL, auth=TokenAuth(BROKER_API_KEY)) as client:
 
         application = Application.from_request(body)
         application_uuid = application.uuid
-        
 
     print("Add Bank Statement")
     document_response = client.new_document(
@@ -71,7 +74,6 @@ with SilvrClient(base_url=API_URL, auth=TokenAuth(BROKER_API_KEY)) as client:
     print(json.dumps(body, indent=2))
     document_response.raise_for_status()
     document = Document.from_request(body)
-    breakpoint()
 
     print("Add Financial Statement")
     document_response = client.new_document(
