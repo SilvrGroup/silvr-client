@@ -17,11 +17,6 @@ from .choices import (
 
 @dataclass
 class Application:
-    uuid: str
-    created: dt.datetime
-    author: str | None
-    state: ApplicationState
-
     # Contact fields
     first_name: str
     last_name: str
@@ -30,8 +25,6 @@ class Application:
 
     # Company fields
     company_name: str
-    company_registration_number: str | None
-    company_vat_number: str | None
     country: Country
 
     # Declarative information
@@ -41,10 +34,18 @@ class Application:
 
     additional_message: str | None
 
+    uuid: str | None = None
+    created: dt.datetime | None = None
+    author: str | None = None
+    state: ApplicationState | None = None
+
+    company_registration_number: str | None = ""
+    company_vat_number: str | None = ""
+
     @classmethod
     def from_request(cls, application_body: dict[str, str | None]) -> "Application":
         application = Application(**application_body)
-        application.created = dt.datetime.fromisoformat(application.created)
+        application.created = dt.datetime.fromisoformat(application.created.replace("Z", "+00:00"))
         application.state = ApplicationState(application.state)
         application.country = Country(application.country)
         application.expected_funding_amount_range = ExpectedFundingAmountRange(
@@ -103,6 +104,6 @@ class Document:
     @classmethod
     def from_request(cls, document_body: dict[str, str | None]) -> "Document":
         document = Document(**document_body)
-        document.created = dt.datetime.fromisoformat(document.created)
+        document.created = dt.datetime.fromisoformat(document.created.replace("Z", "+00:00"))
         document.category = DocumentCategory(document.category)
         return document
