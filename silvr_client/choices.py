@@ -7,6 +7,20 @@ class TextChoices(str, enum.Enum):
     pass
 
 
+class ApplicationState(TextChoices):
+    REJECTED = "REJECTED"
+    WAITING_FOR_CONNECTORS = "WAITING_FOR_CONNECTORS"
+    MISSING_DOCUMENTS = "MISSING_DOCUMENTS"
+    EXHAUSTIVITY_CHECK = "EXHAUSTIVITY_CHECK"
+    RISK_ANALYSIS = "RISK_ANALYSIS"
+    PROPOSITION_SENT = "PROPOSITION_SENT"
+    WAITING_FOR_KYB = "WAITING_FOR_KYB"
+    KYB_VALIDATION = "KYB_VALIDATION"
+    CONTRACT_SENT = "CONTRACT_SENT"
+    CONTRACT_SIGNED = "CONTRACT_SIGNED"
+    UNKNOWN = "UNKNOWN"
+
+    
 class ExpectedFundingAmountRange(TextChoices):
     LESS_THAN_10K = "LESS_THAN_10K"
     BETWEEN_10K_AND_100K = "BETWEEN_10K_AND_100K"
@@ -59,3 +73,4 @@ class UploadedFile:
 
     def astuple(self) -> tuple[str, BinaryIO, ContentType]:
         return (self.filename, self.stream, self.content_type)
+
